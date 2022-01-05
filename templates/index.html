@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-{% autoescape true %}
+{% autoescape false %}
 <html>
   <head>
     <meta charset="utf-8">
-    <title>XSS Demo</title>
+    <title>Cookbook</title>
     <link rel="stylesheet" href="/static/style.css">
   </head>
 
@@ -11,35 +11,47 @@
 
     <!-- Header -->
     <header>
-      <h1>XSS Demo</h1>
-      <p>Read, search and post comments</p>
+      <h1>Granny's Cookbook</h1>
+      <p>Read, search and post recipes</p>
     </header>
 
     <!-- Search form -->
     <form method="GET">
-      <input type="text" name="q" 
+      <input type="text" name="q"
              placeholder="Search query" autocomplete="off" />
-      <input type="submit" value="Filter comments" />
+      <input type="submit" value="Filter recipes" />
     </form>
 
     <!-- Comments -->
     {% if not search_query %}
-      <h3>Showing all comments:</h3>
+      <h3>Showing all recipes:</h3>
     {% else %}
-      <h3>Showing comments containing "{{ search_query }}":</h3>
+      <h3>Showing recipes containing "{{ search_query }}":</h3>
     {% endif %}
 
-    {% for comment in comments %}
-      <div>
-        <p>{{ comment }}</p>
-      </div>
-    {% endfor %}
+    {% if recipes %}
+        {% for recipe in recipes %}
+          <div>
+            <p>{{ recipe[0] }}</p>
+            <hr/>
+            <p>{{ recipe[1] }}</p>
+          </div>
+        {% endfor %}
+    {% else %}
+        <div>Nothing to show here</div>
+    {% endif %}
 
     <!-- Write form -->
-    <form action="/" method="POST">
-      <input type="text" name="comment" 
-             placeholder="Comment" autocomplete="off" />
-      <input type="submit" value="Submit new comment" />
+    <form action={{ "/admin" if admin else "/" }} method="POST">
+        <input type="text" name="username"
+             placeholder="Username" autocomplete="off" />
+        <input type="text" name="recipe"
+             placeholder="Recipe" autocomplete="off" />
+        {% if admin %}
+            <input id="hidden" type="checkbox" name="hidden">
+            <label for="hidden">Hidden</label>
+        {% endif %}
+      <input type="submit" value="Submit new recipe" />
     </form>
 
   </body>

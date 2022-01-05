@@ -20,10 +20,12 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1em;
     margin: 0 0 1em 0;
+    display: flex;
+    justify-content: center;
 }
 
 p {
-    margin: 0 0 2em 0;
+    margin: 0;
 }
 
 header {
@@ -47,26 +49,33 @@ header p {
 
 div {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin: 20px;
-    padding: 10px;
+    margin: 20px auto;
+    max-width: 50%;
+    padding: 10px 20px;
+    border-radius: 20px;
 }
 
 form {
     margin: 0 0 2em 0;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 input[type="text"] {
     background-color: rgba(144, 144, 144, 0.075);
     border: 1px solid rgba(144, 144, 144, 0.25);
-    border-radius: 4px;
+    border-radius: 50px;
     color: inherit;
     display: block;
     height: 3.5em;
     outline: 0;
     padding: 0 1em;
     text-decoration: none;
-    width: 100%;
+    width: 50%;
+    transition: border-color .2s, box-shadow .2s;
+    margin-top: 5px;
 }
 
 input[type="text"]:focus {
@@ -89,7 +98,7 @@ input[type="submit"] {
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
     white-space: nowrap;
 }
 
