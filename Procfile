@@ -1,1 +1,1 @@
-web: gunicorn --debug app:app
+python app.py
