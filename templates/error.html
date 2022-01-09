@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ error.name }}</title>
+</head>
+<body>
+    <h1>{{ error.name }}</h1>
+    <p>{{ error.description }}</p>
+    <br>
+    {% for line in stack %}
+        <p>{{ line }}</p>
+    {% endfor %}
+</body>
+</html>

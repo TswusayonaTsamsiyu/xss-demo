@@ -29,4 +29,7 @@ def get_recipes(search_query, admin=False):
             OR UPPER (username) = UPPER ('{search_query}')
             OR recipe LIKE '%{search_query}%')
     """
-    return connect_db().cursor().execute(query).fetchall()
+    try:
+        return connect_db().cursor().execute(query).fetchall()
+    except sqlite3.OperationalError as error:
+        raise Exception(f"Failed to execute {query}") from error

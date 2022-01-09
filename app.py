@@ -1,9 +1,16 @@
 from flask import Flask, render_template, request, abort
+from werkzeug.exceptions import InternalServerError
+import traceback as tb
 
 import db
 
 app = Flask(__name__)
 PASS = "brewster"
+
+
+@app.errorhandler(InternalServerError)
+def return_stack(error):
+    return render_template("error.html", error=error, stack=tb.format_exc().split("\n")), error.code
 
 
 @app.route('/', methods=['GET', 'POST'])
