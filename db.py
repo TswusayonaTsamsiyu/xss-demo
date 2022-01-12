@@ -29,16 +29,13 @@ def add_recipe(username, recipe, hidden=False):
     db.commit()
 
 
-def get_recipes(search_query, admin=False):
-    query = f"""
-    SELECT username, recipe
-      FROM recipes
-     WHERE ({admin} IS TRUE
-            OR hidden IS FALSE)
-       AND ('{search_query}' = ''
-            OR UPPER (username) = UPPER ('{search_query}')
-            OR recipe LIKE '%{search_query}%')
-    """
+def get_recipes(query, admin=False):
+    hidden_condition = "" if admin else "hidden IS FALSE"
+    query_condition = f"UPPER (username) = UPPER ('{query}') OR recipe LIKE '%{query}%'" if query else ""
+    conjoined = " AND ".join(f"({condition})" for condition in (hidden_condition, query_condition) if condition)
+    final_cond = f"WHERE {conjoined}" if conjoined else ""
+    query = f"SELECT username, recipe FROM recipes {final_cond}"
+    print(query)
     try:
         cursor = connect_db().cursor()
         cursor.execute(query)
