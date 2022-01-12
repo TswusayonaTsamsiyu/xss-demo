@@ -38,6 +38,7 @@ def get_recipes(search_query, admin=False):
             OR recipe LIKE '%{search_query}%')
     """
     try:
-        return connect_db().cursor().execute(query).fetchall()
+        result = connect_db().cursor().execute(query)
+        return result.fetchall() if result else []
     except sqlite3.OperationalError as error:
         raise Exception(f"Failed to execute {query}") from error
