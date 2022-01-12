@@ -43,5 +43,5 @@ def get_recipes(search_query, admin=False):
         cursor = connect_db().cursor()
         cursor.execute(query)
         return cursor.fetchall()
-    except sqlite3.OperationalError as error:
+    except Exception as error:
         raise Exception(f"Failed to execute {query}") from error
