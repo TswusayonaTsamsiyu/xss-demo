@@ -17,7 +17,7 @@ if _IS_PROD:
 def connect_db():
     db = psycopg2.connect(_PROD_DB) if _IS_PROD else sqlite3.connect(_DEV_DB)
     db.cursor().execute('CREATE TABLE IF NOT EXISTS recipes '
-                        '(id INTEGER PRIMARY KEY, '
+                        f'(id {"SERIAL" if _IS_PROD else "INTEGER"} PRIMARY KEY, '
                         'username TEXT, '
                         'recipe TEXT, '
                         'hidden BOOL)')
