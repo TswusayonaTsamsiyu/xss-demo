@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn -e mode=prod app:app

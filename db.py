@@ -1,8 +1,16 @@
+import os
 import sqlite3
+import psycopg2
+
+
+_IS_PROD = os.environ.get("mode", "dev") == "prod"
+_DEV_DB = "recipes.db"
+_PROD_DB = "postgres://ckzhgaznufpyio:65fe2044ba1f1e6b5fb93e83ebe43998ee4e1141a2e1a8d7533e83eab66bf94a@" \
+           "ec2-34-255-225-151.eu-west-1.compute.amazonaws.com:5432/d7f123k4q62nts"
 
 
 def connect_db():
-    db = sqlite3.connect('recipes.db')
+    db = psycopg2.connect(_PROD_DB) if _IS_PROD else sqlite3.connect(_DEV_DB)
     db.cursor().execute('CREATE TABLE IF NOT EXISTS recipes '
                         '(id INTEGER PRIMARY KEY, '
                         'username TEXT, '
